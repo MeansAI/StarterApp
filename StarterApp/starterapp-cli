@@ -1,0 +1,74 @@
+#!/bin/bash
+#
+# starterapp-cli - Command line interface for StarterApp
+#
+# Usage:
+#   ./starterapp-cli build       - Build the app
+#   ./starterapp-cli run         - Build and run the app
+#   ./starterapp-cli clean       - Clean build artifacts
+#   ./starterapp-cli generate    - Regenerate Xcode project
+#   ./starterapp-cli help        - Show this help
+#
+
+cd "$(dirname "$0")"
+
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
+NC='\033[0m'
+
+show_help() {
+    echo -e "${BLUE}StarterApp CLI - Command Line Interface${NC}"
+    echo ""
+    echo "Usage: starterapp-cli <command>"
+    echo ""
+    echo -e "${GREEN}Commands:${NC}"
+    echo "  build       Build the app using build.sh"
+    echo "  run         Build and run the app"
+    echo "  clean       Clean build artifacts"
+    echo "  generate    Regenerate Xcode project from project.yml"
+    echo "  open        Open the project in Xcode"
+    echo "  help        Show this help"
+    echo ""
+}
+
+case "$1" in
+    build)
+        echo -e "${BLUE}Building StarterApp...${NC}"
+        ./build.sh
+        ;;
+    run)
+        echo -e "${BLUE}Building and running StarterApp...${NC}"
+        ./build.sh && open /Users/justinmeans/Library/Developer/Xcode/DerivedData/StarterApp-*/Build/Products/Debug/StarterApp.app
+        ;;
+    clean)
+        echo -e "${YELLOW}Cleaning build artifacts...${NC}"
+        xcodebuild -project StarterApp.xcodeproj -scheme StarterApp clean
+        echo -e "${GREEN}Clean complete${NC}"
+        ;;
+    generate)
+        echo -e "${BLUE}Regenerating Xcode project...${NC}"
+        xcodegen generate
+        echo -e "${GREEN}Project regenerated${NC}"
+        ;;
+    open)
+        echo -e "${BLUE}Opening in Xcode...${NC}"
+        if [ ! -f "StarterApp.xcodeproj/project.pbxproj" ]; then
+            echo -e "${YELLOW}Project not found, generating...${NC}"
+            xcodegen generate
+        fi
+        open StarterApp.xcodeproj
+        ;;
+    help|--help|-h)
+        show_help
+        ;;
+    "")
+        show_help
+        ;;
+    *)
+        echo -e "${RED}Unknown command: $1${NC}"
+        echo "Run 'starterapp-cli help' for usage information"
+        exit 1
+        ;;
+esac

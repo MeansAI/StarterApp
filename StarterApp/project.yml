@@ -1,0 +1,122 @@
+name: StarterApp
+options:
+  bundleIdPrefix: com.outtakes
+  deploymentTarget:
+    macOS: "26.0"
+    iOS: "26.0"
+    visionOS: "26.0"
+    tvOS: "26.0"
+    watchOS: "26.0"
+  developmentLanguage: en
+  xcodeVersion: "26.0"
+  generateEmptyDirectories: true
+  groupSortPosition: top
+
+packages:
+  JUI:
+    path: ../../JUI
+  JCX:
+    path: ../../JCX
+  JBS:
+    path: ../../JWS/JBS
+  JCS:
+    path: ../../JWS/JCS
+  StarterBridge:
+    path: ../StarterBridge
+
+settings:
+  base:
+    MARKETING_VERSION: "1.0.0"
+    CURRENT_PROJECT_VERSION: "11"
+    SWIFT_VERSION: "6.2"
+    ENABLE_USER_SCRIPT_SANDBOXING: "YES"
+    DEVELOPMENT_TEAM: "PASKH93M73"
+
+targets:
+  StarterApp:
+    type: application
+    platform: macOS
+    sources:
+      - path: Shared
+        excludes:
+          - "**/.DS_Store"
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.outtakes.starterapp
+        INFOPLIST_GENERATION_MODE: GeneratedFile
+        INFOPLIST_KEY_CFBundleDisplayName: StarterApp
+        INFOPLIST_KEY_LSApplicationCategoryType: public.app-category.productivity
+        INFOPLIST_KEY_NSHumanReadableCopyright: "© 2026 Outtakes LLC"
+        CODE_SIGN_ENTITLEMENTS: macOS/macOS.entitlements
+        CODE_SIGN_STYLE: Automatic
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        GENERATE_INFOPLIST_FILE: "YES"
+        COMBINE_HIDPI_IMAGES: "YES"
+        MACOSX_DEPLOYMENT_TARGET: "26.0"
+        SWIFT_EMIT_LOC_STRINGS: "YES"
+    entitlements:
+      path: macOS/macOS.entitlements
+    dependencies:
+      - package: JUI
+      - package: JCX
+      - package: JBS
+      - package: JCS
+      - package: StarterBridge
+
+  StarterApp-iOS:
+    type: application
+    platform: iOS
+    sources:
+      - path: Shared
+        excludes:
+          - "**/.DS_Store"
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.outtakes.starterapp
+        INFOPLIST_GENERATION_MODE: GeneratedFile
+        INFOPLIST_KEY_CFBundleDisplayName: StarterApp
+        INFOPLIST_KEY_LSApplicationCategoryType: public.app-category.productivity
+        INFOPLIST_KEY_NSHumanReadableCopyright: "© 2026 Outtakes LLC"
+        CODE_SIGN_ENTITLEMENTS: "StarterApp (iOS).entitlements"
+        CODE_SIGN_STYLE: Automatic
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
+        GENERATE_INFOPLIST_FILE: "YES"
+        IPHONEOS_DEPLOYMENT_TARGET: "26.0"
+        SWIFT_EMIT_LOC_STRINGS: "YES"
+    entitlements:
+      path: "StarterApp (iOS).entitlements"
+    dependencies:
+      - package: JUI
+      - package: JCX
+      - package: JBS
+      - package: JCS
+      - package: StarterBridge
+
+schemes:
+  StarterApp:
+    build:
+      targets:
+        StarterApp: all
+    run:
+      config: Debug
+      commandLineArguments:
+        "-NSConstraintBasedLayoutVisualizeMutuallyExclusiveConstraints": false
+    profile:
+      config: Release
+    analyze:
+      config: Debug
+    archive:
+      config: Release
+
+  StarterApp-iOS:
+    build:
+      targets:
+        StarterApp-iOS: all
+    run:
+      config: Debug
+    profile:
+      config: Release
+    analyze:
+      config: Debug
+    archive:
+      config: Release
