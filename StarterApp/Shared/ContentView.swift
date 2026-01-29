@@ -2,6 +2,9 @@ import JCS
 import JUI
 import SwiftUI
 
+let topBarHeight: CGFloat = 52
+let bottomBarHeight: CGFloat = 100
+
 struct ContentView: View {
     @EnvironmentObject var interface: Interface
     @EnvironmentObject var network: Network
@@ -136,7 +139,8 @@ struct HomeView: View {
                     .foregroundStyle(Interface.Colors.med)
             }
             .padding()
-            .padding(.top, Fibonacci.large.wholeValue)
+            .padding(.top, topBarHeight)
+            .padding(.bottom, bottomBarHeight)
             .frame(maxWidth: .infinity)
         }
     }
@@ -160,7 +164,8 @@ struct SettingsView: View {
                     .foregroundStyle(Interface.Colors.med)
             }
             .padding()
-            .padding(.top, Fibonacci.large.wholeValue)
+            .padding(.top, topBarHeight)
+            .padding(.bottom, bottomBarHeight)
             .frame(maxWidth: .infinity)
         }
     }
@@ -182,7 +187,8 @@ struct AboutView: View {
                     .foregroundStyle(Interface.Colors.med)
             }
             .padding()
-            .padding(.top, Fibonacci.large.wholeValue)
+            .padding(.top, topBarHeight)
+            .padding(.bottom, bottomBarHeight)
             .frame(maxWidth: .infinity)
         }
     }
